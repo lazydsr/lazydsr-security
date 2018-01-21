@@ -3,6 +3,7 @@ package com.lazydsr.security.browser;
 import com.lazydsr.security.browser.authentication.LazydsrAuthenticationFailureHandler;
 import com.lazydsr.security.browser.authentication.LazydsrAuthenticationSuccessHandler;
 import com.lazydsr.security.core.properties.SecurityProperties;
+import com.lazydsr.security.core.validata.ValidataCodeFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * BrowserSecurityConfig
@@ -40,14 +42,16 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.formLogin()
-                .loginPage("/authentication/require").failureUrl("/authentication/require?error")
-                .loginProcessingUrl("/authentication/form").successHandler(successHandler)
+        http.addFilterBefore(new ValidataCodeFilter(), UsernamePasswordAuthenticationFilter.class)
+
+                .formLogin()
+                .loginPage("/lazydsr/authentication/require").failureUrl("/lazydsr/authentication/require?error")
+                .loginProcessingUrl("/lazydsr/authentication/form").successHandler(successHandler)
                 .failureHandler(failureHandler)
                 .permitAll()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/authentication/require", securityProperties.getBrowser().getLoginPage()).permitAll()
+                .antMatchers(securityProperties.getBrowser().getLoginPage(), "/lazydsr/code/image").permitAll()
                 .anyRequest()
                 .authenticated();
 

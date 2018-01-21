@@ -42,7 +42,7 @@ public class BrowserSecurityController {
      * @param response response
      * @return return
      */
-    @RequestMapping("/authentication/require")
+    @RequestMapping("/lazydsr/authentication/require")
     @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
     public SimpleResponse requireAuthentication(HttpServletRequest request, HttpServletResponse response) throws IOException {
         SavedRequest savedRequest = requestCache.getRequest(request, response);

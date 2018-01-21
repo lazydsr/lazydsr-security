@@ -8,6 +8,10 @@ spring:
     password: root
   session:
     store-type: none
+lazydsr:
+  security:
+    browser:
+      loginType: JSON
 #lazydsr:
 #  security:
 #    browser:

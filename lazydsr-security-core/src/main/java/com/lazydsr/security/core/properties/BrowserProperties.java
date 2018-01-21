@@ -13,5 +13,5 @@ import lombok.Data;
 @Data
 public class BrowserProperties {
     private String loginPage = "/lazydsr-login.html";
-    private Enum loginType=LoginType.VIEW;
+    private LoginType loginType = LoginType.VIEW;
 }
