@@ -1,0 +1,5 @@
+
+/.idea/
+/lazydsr-security-browser/target/
+/lazydsr-security-core/target/
+*.iml
