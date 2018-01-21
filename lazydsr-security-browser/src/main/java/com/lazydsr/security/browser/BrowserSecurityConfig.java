@@ -1,5 +1,6 @@
 package com.lazydsr.security.browser;
 
+import com.lazydsr.security.browser.authentication.LazydsrAuthenticationFailureHandler;
 import com.lazydsr.security.browser.authentication.LazydsrAuthenticationSuccessHandler;
 import com.lazydsr.security.core.properties.SecurityProperties;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,8 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     private SecurityProperties securityProperties;
     @Autowired
     private LazydsrAuthenticationSuccessHandler successHandler;
+    @Autowired
+    private LazydsrAuthenticationFailureHandler failureHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -40,6 +43,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin()
                 .loginPage("/authentication/require").failureUrl("/authentication/require?error")
                 .loginProcessingUrl("/authentication/form").successHandler(successHandler)
+                .failureHandler(failureHandler)
                 .permitAll()
                 .and()
                 .authorizeRequests()
