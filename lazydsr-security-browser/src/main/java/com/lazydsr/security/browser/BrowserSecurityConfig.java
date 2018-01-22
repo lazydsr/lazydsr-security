@@ -41,9 +41,12 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        ValidataCodeFilter validataCodeFilter = new ValidataCodeFilter();
+        validataCodeFilter.setLazydsrAuthenticationFailureHandler(failureHandler);
+        validataCodeFilter.setSecurityProperties(securityProperties);
+        validataCodeFilter.afterPropertiesSet();
 
-        http.addFilterBefore(new ValidataCodeFilter(), UsernamePasswordAuthenticationFilter.class)
-
+        http.addFilterBefore(validataCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
                 .loginPage("/lazydsr/authentication/require").failureUrl("/lazydsr/authentication/require?error")
                 .loginProcessingUrl("/lazydsr/authentication/form").successHandler(successHandler)

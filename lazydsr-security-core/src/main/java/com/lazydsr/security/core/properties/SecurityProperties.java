@@ -15,5 +15,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "lazydsr.security")
 public class SecurityProperties {
     private BrowserProperties browser = new BrowserProperties();
+    private ValidataCodeProperties validata=new ValidataCodeProperties();
 
 }

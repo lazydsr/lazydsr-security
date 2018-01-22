@@ -12,6 +12,12 @@ lazydsr:
   security:
     browser:
       loginType: JSON
+    validata:
+      image:
+        length: 6
+        width: 100
+        expireIn: 10
+        urls: /user,/user2/**
 #lazydsr:
 #  security:
 #    browser:
